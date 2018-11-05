@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using TravelAgencyServer.Models;
 
 namespace TravelAgencyServer
 {
@@ -22,9 +23,17 @@ namespace TravelAgencyServer
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
+                using (TourCategoryContext db = new TourCategoryContext())
+                {
+                    var categories = db.categories.ToList();
+                    Console.WriteLine("Список объектов:");
+                    foreach (TourCategory u in categories)
+                    {
+                        Console.WriteLine($"{u.Name} - {u.Name}");
+                    }
+                }
             }
-
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("Hello World!");
